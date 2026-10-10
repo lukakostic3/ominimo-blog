@@ -11,12 +11,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')
-            ->withCount('comments')
-            ->latest()
-            ->paginate(10);
-
-        return view('posts.index', compact('posts'));
+        return view('posts.index');
     }
 
     public function create()
@@ -32,15 +27,8 @@ class PostController extends Controller
             ->with('status', 'Post created successfully.');
     }
 
-    public function show(Post $post)
+   public function show(Post $post)
     {
-        $post->load([
-            'user',
-            'comments' => fn ($query) => $query->with('user')->latest(),
-        ]);
-
-        $post->comments->each->setRelation('post', $post);
-
         return view('posts.show', compact('post'));
     }
 

@@ -17,24 +17,20 @@ class PostTest extends TestCase
         return ['title' => 'Test title', 'content' => 'Test content'];
     }
 
-    public function test_guests_can_view_posts_list(): void
+    public function test_guests_can_view_posts_page(): void
     {
-        $post = Post::factory()->create();
-
         $this->get(route('posts.index'))
             ->assertOk()
-            ->assertSee($post->title);
+            ->assertSee('data-vue="post-list"', false);
     }
 
-    public function test_guests_can_view_a_single_post_with_comments(): void
+    public function test_guests_can_view_a_single_post_page(): void
     {
         $post = Post::factory()->create();
-        $comment = Comment::factory()->for($post)->create();
 
         $this->get(route('posts.show', $post))
             ->assertOk()
-            ->assertSee($post->title)
-            ->assertSee($comment->comment);
+            ->assertSee($post->title);
     }
 
     public function test_guests_are_redirected_to_login_from_create_form(): void

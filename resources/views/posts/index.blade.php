@@ -14,22 +14,7 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-4">
             <x-flash />
-
-            @forelse ($posts as $post)
-                <article class="bg-white p-6 shadow-sm sm:rounded-lg">
-                    <h3 class="text-lg font-semibold text-gray-900">
-                        <a href="{{ route('posts.show', $post) }}" class="hover:underline">{{ $post->title }}</a>
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">
-                        by {{ $post->user->name }} · {{ $post->created_at->diffForHumans() }} · {{ $post->comments_count }} comments
-                    </p>
-                    <p class="mt-3 text-gray-700">{{ \Illuminate\Support\Str::limit($post->content, 200) }}</p>
-                </article>
-            @empty
-                <p class="text-gray-500">No posts yet.</p>
-            @endforelse
-
-            {{ $posts->links() }}
+            <div data-vue="post-list"></div>
         </div>
     </div>
 </x-app-layout>
