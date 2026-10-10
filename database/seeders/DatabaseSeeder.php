@@ -11,7 +11,13 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
    public function run(): void
-    {
+    {   
+        if (User::query()->exists()) {
+            $this->command->info('Database already seeded - skipping.');
+
+            return;
+        }
+
         $this->call([
             UserSeeder::class,
             PostSeeder::class,
