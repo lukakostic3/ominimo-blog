@@ -17,4 +17,13 @@ class PostPolicy
     {
         return $user->id === $post->user_id;
     }
+
+    public function before(User $user, string $ability): ?bool
+    {
+        if ($user->isAdmin() && $ability === 'delete') {
+            return true;
+        }
+
+        return null;
+    }
 }

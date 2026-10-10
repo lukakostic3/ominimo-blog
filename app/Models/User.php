@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Enums\Role;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
@@ -28,6 +29,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => Role::class,
         ];
     }
 
@@ -40,4 +42,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === Role::Admin;
+    }
+
 }

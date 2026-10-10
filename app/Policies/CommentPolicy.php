@@ -12,4 +12,13 @@ class CommentPolicy
         return $user->id === $comment->user_id
             || $user->id === $comment->post->user_id;
     }
+
+    public function before(User $user, string $ability): ?bool
+    {
+        if ($user->isAdmin() && $ability === 'delete') {
+            return true;
+        }
+
+        return null;
+    }
 }
