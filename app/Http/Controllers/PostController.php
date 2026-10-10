@@ -39,6 +39,8 @@ class PostController extends Controller
             'comments' => fn ($query) => $query->with('user')->latest(),
         ]);
 
+        $post->comments->each->setRelation('post', $post);
+
         return view('posts.show', compact('post'));
     }
 
